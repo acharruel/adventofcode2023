@@ -99,7 +99,7 @@ mod tests {
 
     #[test]
     fn test2() {
-        let input2 = vec![
+        let input = vec![
             "two1nine".to_string(),
             "eightwothree".into(),
             "abcone2threexyz".into(),
@@ -108,6 +108,6 @@ mod tests {
             "zoneight234".into(),
             "7pqrstsixteen".into(),
         ];
-        assert!(process(input2).unwrap() == 281);
+        assert!(process(input).unwrap() == 281);
     }
 }

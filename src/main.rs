@@ -4,7 +4,8 @@ use std::{
     path::Path,
 };
 
-mod day01;
+//mod day01;
+mod day02;
 
 fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
     let file = File::open(filename).expect("no such file");
@@ -16,5 +17,6 @@ fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
 
 fn main() {
     println!("Avent of code 2023");
-    day01::run();
+    //day01::run();
+    day02::run();
 }
