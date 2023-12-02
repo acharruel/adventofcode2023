@@ -77,7 +77,6 @@ fn process(input: Vec<String>) -> Result<i32> {
 }
 
 pub fn run() {
-    print!("Day 1: ");
     let res = process(lines_from_file("./input/day01.txt"));
     println!("{:?}", res.unwrap());
 }

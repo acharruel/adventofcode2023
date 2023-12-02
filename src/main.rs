@@ -1,10 +1,11 @@
+use clap::Parser;
 use std::{
     fs::File,
     io::{BufRead, BufReader},
     path::Path,
 };
 
-//mod day01;
+mod day01;
 mod day02;
 
 fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
@@ -15,8 +16,23 @@ fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
         .collect()
 }
 
+/// Advent of code 2023
+#[derive(Debug, Parser)]
+struct Arguments {
+    #[clap(short, long)]
+    /// Index of the day
+    day: i32,
+}
+
 fn main() {
-    println!("Avent of code 2023");
-    //day01::run();
-    day02::run();
+    let args = Arguments::parse();
+
+    println!("Advent of code 2023");
+    println!("Day {}:", &args.day);
+
+    match args.day {
+        1 => day01::run(),
+        2 => day02::run(),
+        _ => println!("Day {} not covered yet...", args.day),
+    }
 }

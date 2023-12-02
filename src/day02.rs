@@ -95,7 +95,6 @@ fn process_power(input: Vec<String>) -> Result<i32> {
 }
 
 pub fn run() {
-    println!("Day 2: ");
     let res = process(lines_from_file("./input/day02.txt"));
     println!(" * {:?}", res.unwrap());
     let res = process_power(lines_from_file("./input/day02.txt"));
