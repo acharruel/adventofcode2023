@@ -7,6 +7,7 @@ use std::{
 
 mod day01;
 mod day02;
+mod day03;
 
 fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
     let file = File::open(filename).expect("no such file");
@@ -33,6 +34,7 @@ fn main() {
     match args.day {
         1 => day01::run(),
         2 => day02::run(),
+        3 => day03::run(),
         _ => println!("Day {} not covered yet...", args.day),
     }
 }
