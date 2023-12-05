@@ -134,7 +134,7 @@ fn process2(input: Vec<String>) -> Result<i32> {
     let engine_map = parse_engine(input)?;
     let mut gear = 0;
     for (k, v) in engine_map.iter_all() {
-        if k.contains('*') && v.len() > 1 {
+        if k.contains('*') && v.len() == 2 {
             gear += v.iter().product::<i32>();
         }
     }
