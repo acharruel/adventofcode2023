@@ -1,7 +1,5 @@
 use anyhow::Result;
 
-use crate::lines_from_file;
-
 fn beat_record(time: i64, distance: i64) -> Result<i64> {
     Ok((1..time)
         .map(|x| x * (time - x))
@@ -9,7 +7,7 @@ fn beat_record(time: i64, distance: i64) -> Result<i64> {
         .sum::<i64>())
 }
 
-fn process(input: Vec<String>) -> Result<i64> {
+fn process(input: &Vec<String>) -> Result<i64> {
     let mut times = Vec::new();
     let mut distances = Vec::new();
 
@@ -37,7 +35,7 @@ fn process(input: Vec<String>) -> Result<i64> {
     Ok(mul)
 }
 
-fn process2(input: Vec<String>) -> Result<i64> {
+fn process2(input: &Vec<String>) -> Result<i64> {
     let mut time = 0;
     let mut distance = 0;
     for lines in input {
@@ -59,10 +57,12 @@ fn process2(input: Vec<String>) -> Result<i64> {
 
 pub fn run() {
     let input = vec![
-      "Time:        54     94     65     92".to_string(),
-      "Distance:   302   1476   1029   1404".into(),
+        "Time:        54     94     65     92".to_string(),
+        "Distance:   302   1476   1029   1404".into(),
     ];
-    let res = process2(input);
+    let res = process(&input);
+    println!(" * {:?}", res.unwrap());
+    let res = process2(&input);
     println!(" * {:?}", res.unwrap());
 }
 
@@ -77,7 +77,7 @@ mod tests {
             "Time:      7  15   30".to_string(),
             "Distance:  9  40  200".into(),
         ];
-        assert!(process(input).unwrap() == 288);
+        assert!(process(&input).unwrap() == 288);
     }
 
     #[test]
@@ -86,6 +86,6 @@ mod tests {
             "Time:      7  15   30".to_string(),
             "Distance:  9  40  200".into(),
         ];
-        assert!(process2(input).unwrap() == 71503);
+        assert!(process2(&input).unwrap() == 71503);
     }
 }
