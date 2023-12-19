@@ -13,6 +13,7 @@ mod day05;
 mod day06;
 mod day07;
 mod day08;
+mod day09;
 
 fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
     let file = File::open(filename).expect("no such file");
@@ -45,6 +46,7 @@ fn main() {
         6 => day06::run(),
         7 => day07::run(),
         8 => day08::run(),
+        9 => day09::run(),
         _ => println!("Day {} not covered yet...", args.day),
     }
 }
