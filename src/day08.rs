@@ -15,8 +15,8 @@ fn process(input: Vec<String>) -> Result<i32> {
             let value = parts
                 .next()
                 .unwrap()
-                .trim_start_matches("(")
-                .trim_end_matches(")")
+                .trim_start_matches('(')
+                .trim_end_matches(')')
                 .split(", ")
                 .collect::<Vec<&str>>();
             (key, value)
@@ -52,8 +52,8 @@ fn process2(input: Vec<String>) -> Result<i64> {
             let value = parts
                 .next()
                 .unwrap()
-                .trim_start_matches("(")
-                .trim_end_matches(")")
+                .trim_start_matches('(')
+                .trim_end_matches(')')
                 .split(", ")
                 .collect::<Vec<&str>>();
             (key, value)
@@ -62,16 +62,14 @@ fn process2(input: Vec<String>) -> Result<i64> {
 
     let keys = map
         .keys()
-        .filter(|x| x.ends_with("A"))
-        .map(|x| *x)
-        .collect::<Vec<&str>>();
+        .filter(|x| x.ends_with('A')).copied();
 
     let mut res: Option<i64> = None;
 
     for mut key in keys {
         let mut index = 0;
         loop {
-            if key.ends_with("Z") {
+            if key.ends_with('Z') {
                 break;
             }
 

@@ -2,7 +2,7 @@ use anyhow::Result;
 
 use crate::lines_from_file;
 
-fn is_vec_all_zeros(vec: &Vec<i32>) -> bool {
+fn is_vec_all_zeros(vec: &[i32]) -> bool {
     vec.iter().all(|&x| x == 0)
 }
 

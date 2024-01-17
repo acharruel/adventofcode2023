@@ -9,7 +9,7 @@ fn process_spring(
     group: &Vec<usize>,
     cache: &mut HashMap<(String, Vec<usize>), i64>,
 ) -> Result<i64> {
-    if spring.len() == 0 {
+    if spring.is_empty() {
         return match group.is_empty() {
             true => Ok(1),
             false => Ok(0),
@@ -30,21 +30,20 @@ fn process_spring(
         return Ok(cache[&key]);
     }
 
-    if ".?".contains(spring.chars().nth(0).unwrap()) {
+    if ".?".contains(spring.chars().next().unwrap()) {
         res += process_spring(spring.chars().skip(1).collect::<String>(), group, cache)?;
     }
 
-    if "#?".contains(spring.chars().nth(0).unwrap()) {
-        if group[0] <= spring.len()
-            && !&spring[..group[0]].contains('.')
-            && (group[0] == spring.len() || spring.chars().nth(group[0]).unwrap() != '#')
-        {
-            res += process_spring(
-                spring.chars().skip(group[0] + 1).collect::<String>(),
-                &group[1..].to_vec(),
-                cache,
-            )?;
-        }
+    if "#?".contains(spring.chars().next().unwrap())
+        && group[0] <= spring.len()
+        && !&spring[..group[0]].contains('.')
+        && (group[0] == spring.len() || spring.chars().nth(group[0]).unwrap() != '#')
+    {
+        res += process_spring(
+            spring.chars().skip(group[0] + 1).collect::<String>(),
+            &group[1..].to_vec(),
+            cache,
+        )?;
     }
 
     cache.insert(key, res);
@@ -71,7 +70,7 @@ fn process(input: Vec<String>) -> Result<i64> {
     let mut total = 0;
     for it in springs.iter().zip(groups.iter()) {
         let (spring, group) = it;
-        total += process_spring(spring.to_string(), &group, &mut cache)?;
+        total += process_spring(spring.to_string(), group, &mut cache)?;
     }
 
     Ok(total)
@@ -107,7 +106,7 @@ fn process2(input: Vec<String>) -> Result<i64> {
     let mut total = 0;
     for it in new_springs.iter().zip(groups.iter()) {
         let (spring, group) = it;
-        total += process_spring(spring.to_string(), &group, &mut cache)?;
+        total += process_spring(spring.to_string(), group, &mut cache)?;
     }
 
     Ok(total)

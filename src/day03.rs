@@ -14,51 +14,42 @@ fn is_adjacent_to_symbol(
     pos: i32,
     len: i32,
 ) -> Option<(char, i32, i32)> {
-    match prev {
-        Some(line) => {
-            let min = cmp::max(pos - 1, 0) as usize;
-            let max = cmp::min(pos + len + 1, line.len() as i32) as usize;
-            for (i, c) in line[min..max].chars().enumerate() {
-                if !c.is_digit(10) && c != '.' {
-                    return Some((c, (i + min) as i32, -1));
-                }
+    if let Some(line) = prev {
+        let min = cmp::max(pos - 1, 0) as usize;
+        let max = cmp::min(pos + len + 1, line.len() as i32) as usize;
+        for (i, c) in line[min..max].chars().enumerate() {
+            if !c.is_ascii_digit() && c != '.' {
+                return Some((c, (i + min) as i32, -1));
             }
         }
-        None => (),
-    }
+    };
 
-    match next {
-        Some(line) => {
-            let min = cmp::max(pos - 1, 0) as usize;
-            let max = cmp::min(pos + len + 1, line.len() as i32) as usize;
-            for (i, c) in line[min..max].chars().enumerate() {
-                if !c.is_digit(10) && c != '.' {
-                    return Some((c, (i + min) as i32, 1));
-                }
+    if let Some(line) = next {
+        let min = cmp::max(pos - 1, 0) as usize;
+        let max = cmp::min(pos + len + 1, line.len() as i32) as usize;
+        for (i, c) in line[min..max].chars().enumerate() {
+            if !c.is_ascii_digit() && c != '.' {
+                return Some((c, (i + min) as i32, 1));
             }
         }
-        None => (),
-    }
+    };
 
-    match cur {
-        Some(line) => {
-            if pos > 0 {
-                let c = line.chars().nth(pos as usize - 1).unwrap();
-                if !c.is_digit(10) && c != '.' {
-                    return Some((c, pos - 1, 0));
-                }
-            }
-            if pos + len < line.len() as i32 {
-                let c = line.chars().nth((pos + len) as usize).unwrap();
-                if !c.is_digit(10) && c != '.' {
-                    return Some((c, pos + len, 0));
-                }
+    if let Some(line) = cur {
+        if pos > 0 {
+            let c = line.chars().nth(pos as usize - 1).unwrap();
+            if !c.is_ascii_digit() && c != '.' {
+                return Some((c, pos - 1, 0));
             }
         }
-        None => (),
-    }
+        if pos + len < line.len() as i32 {
+            let c = line.chars().nth((pos + len) as usize).unwrap();
+            if !c.is_ascii_digit() && c != '.' {
+                return Some((c, pos + len, 0));
+            }
+        }
+    };
 
-    return None;
+    None
 }
 
 fn find_engine_part(
@@ -73,9 +64,8 @@ fn find_engine_part(
         let slice = &cur_line.unwrap()[i..];
         let (num, len) = i32::from_radix_10(slice.as_bytes());
         if len > 0 {
-            match is_adjacent_to_symbol(prev_line, cur_line, next_line, i as i32, len as i32) {
-                Some((c, p, m)) => engine_map.insert(format!("{} {} {}", c, nline + m, p), num),
-                None => (),
+            if let Some((c, p, m)) = is_adjacent_to_symbol(prev_line, cur_line, next_line, i as i32, len as i32) {
+                engine_map.insert(format!("{} {} {}", c, nline + m, p), num)
             };
             i += len;
         } else {

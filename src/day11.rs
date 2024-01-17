@@ -3,7 +3,7 @@ use num::abs;
 
 use crate::lines_from_file;
 
-fn line_is_empty(line: &String) -> bool {
+fn line_is_empty(line: &str) -> bool {
     line.chars().all(|c| c == '.')
 }
 
@@ -16,8 +16,8 @@ fn col_is_empty(input: &Vec<String>, col: i32) -> bool {
 fn process_distance(
     (x1, y1): (i32, i32),
     (x2, y2): (i32, i32),
-    empty_lines: &Vec<i32>,
-    empty_cols: &Vec<i32>,
+    empty_lines: &[i32],
+    empty_cols: &[i32],
     incr: i64,
 ) -> Result<i64> {
     let mut dist = y2 as i64 - y1 as i64 + abs(x2 as i64 - x1 as i64);

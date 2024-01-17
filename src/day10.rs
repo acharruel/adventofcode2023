@@ -125,7 +125,7 @@ fn process(input: Vec<String>) -> Result<i32> {
     Ok(bfs(&graph, root).len() as i32 / 2)
 }
 
-fn ray_casting(input: &Vec<String>, x: usize, y: usize, visited: &Vec<usize>) -> Result<i32> {
+fn ray_casting(input: &Vec<String>, x: usize, y: usize, visited: &[usize]) -> Result<i32> {
     let ncol = input[0].len();
     let mut count = 0;
     if x == 0 || x == ncol - 1 {

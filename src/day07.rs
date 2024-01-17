@@ -4,7 +4,7 @@ use anyhow::{bail, Result};
 
 use crate::lines_from_file;
 
-fn find_hand_type(hand: &String) -> Result<i32> {
+fn find_hand_type(hand: &str) -> Result<i32> {
     let mut cards: HashMap<char, i32> = HashMap::new();
     for c in hand.chars() {
         if cards.get(&c).is_some() {
@@ -36,7 +36,7 @@ fn find_hand_type(hand: &String) -> Result<i32> {
     }
 }
 
-fn compare_hands(hand1: &String, hand2: &String) -> Result<Ordering> {
+fn compare_hands(hand1: &str, hand2: &str) -> Result<Ordering> {
     let type1 = find_hand_type(hand1)?;
     let type2 = find_hand_type(hand2)?;
     if type1 != type2 {
@@ -66,10 +66,10 @@ fn compare_hands(hand1: &String, hand2: &String) -> Result<Ordering> {
         })
         .collect();
     for i in 0..a.len() {
-        if a[i] > b[i] {
-            return Ok(Ordering::Greater);
-        } else if a[i] < b[i] {
-            return Ok(Ordering::Less);
+        match a[i].cmp(&b[i]) {
+            Ordering::Greater => return Ok(Ordering::Greater),
+            Ordering::Less => return Ok(Ordering::Less),
+            Ordering::Equal => continue,
         }
     }
     Ok(Ordering::Equal)
@@ -121,7 +121,7 @@ fn improve_hand(hand: &String) -> Result<String> {
     // This not handled here, but we are lucky!
     map.remove(&'J');
     let c = map.iter().max_by_key(|(_, &v)| v).unwrap().0;
-    Ok(hand.replace("J", &c.to_string()))
+    Ok(hand.replace('J', &c.to_string()))
 }
 
 fn compare_hands_with_joker(hand1: &String, hand2: &String) -> Result<Ordering> {
@@ -158,10 +158,10 @@ fn compare_hands_with_joker(hand1: &String, hand2: &String) -> Result<Ordering> 
         })
         .collect();
     for i in 0..a.len() {
-        if a[i] > b[i] {
-            return Ok(Ordering::Greater);
-        } else if a[i] < b[i] {
-            return Ok(Ordering::Less);
+        match a[i].cmp(&b[i]) {
+            Ordering::Greater => return Ok(Ordering::Greater),
+            Ordering::Less => return Ok(Ordering::Less),
+            Ordering::Equal => continue,
         }
     }
     Ok(Ordering::Equal)

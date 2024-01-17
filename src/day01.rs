@@ -33,7 +33,7 @@ fn parse_line(str: String) -> Result<i32> {
     for i in 0..str.len() {
         if first.is_none() {
             let c = str.chars().nth(i).unwrap();
-            if c.is_digit(10) {
+            if c.is_ascii_digit() {
                 first = Some(c);
             } else {
                 first = check_for_digit(str[i..].to_string());
@@ -42,7 +42,7 @@ fn parse_line(str: String) -> Result<i32> {
 
         if last.is_none() {
             let c = str.chars().nth(str.len() - i - 1).unwrap();
-            if c.is_digit(10) {
+            if c.is_ascii_digit() {
                 last = Some(c);
             } else {
                 last = check_for_digit(str[(str.len() - i - 1)..].to_string());
@@ -69,7 +69,7 @@ fn process(input: Vec<String>) -> Result<i32> {
     let mut add = 0;
     for str in input {
         match parse_line(str) {
-            Ok(res) => add = add + res,
+            Ok(res) => add += res,
             Err(e) => bail!("Failed to parse line: {}", e),
         }
     }

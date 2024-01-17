@@ -56,21 +56,18 @@ fn process_seeds(src: Vec<i64>, maps: &Vec<MyMap>) -> Result<Vec<i64>> {
 
 fn process(input: &Vec<String>) -> Result<i64> {
     let mut seeds = Vec::new();
-    let mut line_index = 0;
-    for lines in input {
-        if lines.find("seeds:").is_some() {
-            seeds = lines.split(":").collect::<Vec<&str>>()[1]
+    for (line_index, lines) in input.iter().enumerate() {
+        if lines.contains("seeds:") {
+            seeds = lines.split(':').collect::<Vec<&str>>()[1]
                 .split_whitespace()
                 .map(|x| x.parse::<i64>().unwrap())
                 .collect::<Vec<i64>>();
         }
 
-        if lines.find("map:").is_some() {
+        if lines.contains("map:") {
             let maps = build_map(&input[line_index + 1..].to_vec())?;
             seeds = process_seeds(seeds, &maps)?;
         }
-
-        line_index += 1;
     }
 
     Ok(*seeds.iter().min().unwrap())
@@ -158,21 +155,18 @@ fn process_map(segments: Vec<Segment>, maps_list: &[Vec<MyMap>]) -> Result<i64> 
 
 fn process2(input: &Vec<String>) -> Result<i64> {
     let mut seeds = Vec::new();
-    let mut line_index = 0;
     let mut all_maps = Vec::new();
-    for lines in input {
-        if lines.find("seeds:").is_some() {
-            seeds = lines.split(":").collect::<Vec<&str>>()[1]
+    for (line_index, lines) in input.iter().enumerate() {
+        if lines.contains("seeds:") {
+            seeds = lines.split(':').collect::<Vec<&str>>()[1]
                 .split_whitespace()
                 .map(|x| x.parse::<i64>().unwrap())
                 .collect::<Vec<i64>>();
         }
 
-        if lines.find("map:").is_some() {
+        if lines.contains("map:") {
             all_maps.push(build_map(&input[line_index + 1..].to_vec())?);
         }
-
-        line_index += 1;
     }
 
     let segments = seeds

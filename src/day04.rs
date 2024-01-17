@@ -40,10 +40,7 @@ fn process(input: Vec<String>) -> Result<i32> {
 }
 
 fn process2(input: Vec<String>) -> Result<i32> {
-    let mut map: Vec<i32> = Vec::with_capacity(input.len());
-    for _ in 0..input.len() {
-        map.push(1);
-    }
+    let mut map: Vec<i32> = vec![1; input.len()];
 
     for lines in input {
         let card_index_str = lines.split_whitespace().nth(1).unwrap();

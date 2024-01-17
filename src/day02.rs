@@ -14,12 +14,12 @@ fn parse_game(line: &str) -> Result<i32> {
     let mut chunks = tokens.chunks(2);
 
     // check first chunk to get game index
-    let id = chunks.nth(0).unwrap()[1].replace(":", "");
+    let id = chunks.next().unwrap()[1].replace(':', "");
 
     // iterate next chunks and check whether game is possible
     for elem in chunks {
         let n: i32 = FromStr::from_str(elem[0])?;
-        let color = elem[1].replace(",", "").replace(";", "");
+        let color = elem[1].replace([',', ';'], "");
 
         if color.eq("blue") && n > MAX_BLUE {
             possible = false;
@@ -54,7 +54,7 @@ fn parse_game_power(line: &str) -> Result<i32> {
     // iterate next chunks
     for elem in chunks {
         let n: i32 = FromStr::from_str(elem[0])?;
-        let color = elem[1].replace(",", "").replace(";", "").to_string();
+        let color = elem[1].replace([',',';'], "").to_string();
 
         // replace value in color_map if greater than existing
         if let Some(value) = color_map.get_mut(color.as_str()) {
@@ -66,7 +66,7 @@ fn parse_game_power(line: &str) -> Result<i32> {
 
     let mut power = 1;
     for (_, value) in color_map {
-        power = power * value;
+        power *= value;
     }
 
     Ok(power)
@@ -76,7 +76,7 @@ fn process(input: Vec<String>) -> Result<i32> {
     let mut add = 0;
     for line in input {
         match parse_game(line.as_str()) {
-            Ok(res) => add = add + res,
+            Ok(res) => add += res,
             Err(_) => bail!("Failed to parse line"),
         }
     }
@@ -87,7 +87,7 @@ fn process_power(input: Vec<String>) -> Result<i32> {
     let mut add = 0;
     for line in input {
         match parse_game_power(line.as_str()) {
-            Ok(res) => add = add + res,
+            Ok(res) => add += res,
             Err(_) => bail!("Failed to parse line"),
         }
     }

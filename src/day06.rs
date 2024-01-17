@@ -12,15 +12,15 @@ fn process(input: &Vec<String>) -> Result<i64> {
     let mut distances = Vec::new();
 
     for lines in input {
-        if lines.find("Time:").is_some() {
-            times = lines.split(":").collect::<Vec<&str>>()[1]
+        if lines.contains("Time:") {
+            times = lines.split(':').collect::<Vec<&str>>()[1]
                 .split_whitespace()
                 .map(|x| x.parse::<i64>().unwrap())
                 .collect::<Vec<i64>>();
         }
 
-        if lines.find("Distance:").is_some() {
-            distances = lines.split(":").collect::<Vec<&str>>()[1]
+        if lines.contains("Distance:") {
+            distances = lines.split(':').collect::<Vec<&str>>()[1]
                 .split_whitespace()
                 .map(|x| x.parse::<i64>().unwrap())
                 .collect::<Vec<i64>>();
@@ -39,15 +39,15 @@ fn process2(input: &Vec<String>) -> Result<i64> {
     let mut time = 0;
     let mut distance = 0;
     for lines in input {
-        if lines.find("Time:").is_some() {
-            time = lines.split(":").collect::<Vec<&str>>()[1]
-                .replace(" ", "")
+        if lines.contains("Time:") {
+            time = lines.split(':').collect::<Vec<&str>>()[1]
+                .replace(' ', "")
                 .parse::<i64>()
                 .unwrap();
         }
-        if lines.find("Distance:").is_some() {
-            distance = lines.split(":").collect::<Vec<&str>>()[1]
-                .replace(" ", "")
+        if lines.contains("Distance:") {
+            distance = lines.split(':').collect::<Vec<&str>>()[1]
+                .replace(' ', "")
                 .parse::<i64>()
                 .unwrap();
         }
